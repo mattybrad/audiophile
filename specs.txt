@@ -13,6 +13,7 @@ album rating:
 number of audio files matches file name numbers
 no extraneous files
 album art present
+album art at least 800 pixels square?
 average track rating
 
 track rating:
