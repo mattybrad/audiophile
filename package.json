@@ -1,0 +1,17 @@
+{
+  "name": "audiochecker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "checker.js",
+  "dependencies": {
+    "fs": "^0.0.2",
+    "id3js": "43081j/id3#pull/19/head",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
