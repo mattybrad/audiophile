@@ -1,0 +1,29 @@
+app will serve a web page detailing stats for whole music collection
+each artist/album will also have stats
+
+collection rating:
+base folder contains nothing but folders (for artists) (20%)
+average artist rating (80%)
+
+artist rating:
+folder contains nothing but folders (for albums) (20%)
+average album rating (80%)
+
+album rating:
+number of audio files matches file name numbers
+no extraneous files
+album art present
+average track rating
+
+track rating:
+adheres to ideal file name format, eg: "01 Airbag.flac":
+    [0-9][0-9] .+(\.(mp3|flac|wma|wav))
+id3 artist name matches artist folder name
+id3 album name matches album folder name
+id3 track number matches file name track number
+id3 track name matches file name track name
+good audio file, meaning:
+    wma is bad
+    mp3 128 is ok
+    mp3 160+ is good
+    flac or wav is great
