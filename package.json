@@ -4,6 +4,7 @@
   "description": "",
   "main": "checker.js",
   "dependencies": {
+    "express": "^4.13.4",
     "fs": "^0.0.2",
     "id3js": "43081j/id3#pull/19/head",
     "path": "^0.12.7"

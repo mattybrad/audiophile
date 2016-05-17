@@ -3,11 +3,6 @@ var path = require("path");
 var id3 = require("id3js");
 var baseFolder = "music";
 
-checkCollection(function(result) {
-    console.log("RESULT:");
-    console.log(JSON.stringify(result));
-});
-
 function checkCollection(callback) {
     var files = fs.readdirSync(baseFolder);
     var artistsToCheck = [];
@@ -15,7 +10,13 @@ function checkCollection(callback) {
 
     function onArtistChecked(result) {
         artistResults.push(result);
-        if(artistResults.length == artistsToCheck.length) callback(artistResults);
+        if(artistResults.length == artistsToCheck.length) {
+            // compile results object
+            var resultsObject = {
+                artists: artistResults
+            }
+            callback(resultsObject);
+        }
     }
 
     for(var i = 0; i < files.length; i ++) {
@@ -80,7 +81,6 @@ function checkAlbum(artistFolder, albumFolder, callback) {
 }
 
 function checkTrack(artistFolder, albumFolder, fileName, callback) {
-    console.log(fileName);
     id3(
         {
             file: path.join(baseFolder, artistFolder, albumFolder, fileName),
@@ -93,4 +93,11 @@ function checkTrack(artistFolder, albumFolder, fileName, callback) {
             });
         }
     );
+}
+
+module.exports = {
+    checkCollection: checkCollection,
+    checkArtist: checkArtist,
+    checkAlbum: checkAlbum,
+    checkTrack: checkTrack
 }
