@@ -3,10 +3,31 @@ var path = require("path");
 var id3 = require("id3js");
 var baseFolder = "music";
 
-checkArtist('Bright Eyes', function(result) {
+checkCollection(function(result) {
     console.log("RESULT:");
-    console.log(result);
+    console.log(JSON.stringify(result));
 });
+
+function checkCollection(callback) {
+    var files = fs.readdirSync(baseFolder);
+    var artistsToCheck = [];
+    var artistResults = [];
+
+    function onArtistChecked(result) {
+        artistResults.push(result);
+        if(artistResults.length == artistsToCheck.length) callback(artistResults);
+    }
+
+    for(var i = 0; i < files.length; i ++) {
+        if(fs.lstatSync(path.join(baseFolder, files[i])).isDirectory()) {
+            artistsToCheck.push(files[i]);
+        }
+    }
+
+    for(var i = 0; i < artistsToCheck.length; i ++) {
+        checkArtist(artistsToCheck[i], onArtistChecked);
+    }
+}
 
 function checkArtist(artistFolder, callback) {
     var files = fs.readdirSync(path.join(baseFolder, artistFolder));
