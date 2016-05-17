@@ -11,8 +11,10 @@ function checkCollection(callback) {
     function onArtistChecked(result) {
         artistResults.push(result);
         if(artistResults.length == artistsToCheck.length) {
-            // compile results object
+            // compile final results object
             var resultsObject = {
+                score: 80,
+                issues: ["junk in collection folder"],
                 artists: artistResults
             }
             callback(resultsObject);
@@ -37,7 +39,16 @@ function checkArtist(artistFolder, callback) {
 
     function onAlbumChecked(result) {
         albumResults.push(result);
-        if(albumResults.length == albumsToCheck.length) callback(albumResults);
+        if(albumResults.length == albumsToCheck.length) {
+            // compile final results object
+            var resultsObject = {
+                score: 90,
+                name: artistFolder,
+                issues: ["artist problem", "another artist problem"],
+                albums: albumResults
+            }
+            callback(resultsObject);
+        }
     }
 
     for(var i = 0; i < files.length; i ++) {
@@ -58,7 +69,16 @@ function checkAlbum(artistFolder, albumFolder, callback) {
 
     function onTrackChecked(result) {
         fileResults.push(result);
-        if(fileResults.length == tracksToCheck.length) callback(fileResults);
+        if(fileResults.length == tracksToCheck.length) {
+            // compile final results object
+            var resultsObject = {
+                score: 75,
+                name: albumFolder,
+                issues: ["album is messed up"],
+                tracks: fileResults
+            }
+            callback(resultsObject);
+        }
     }
 
     for(var i = 0; i < files.length; i ++) {
@@ -88,8 +108,9 @@ function checkTrack(artistFolder, albumFolder, fileName, callback) {
         },
         function(err, tags) {
             callback({
-                artistMatchesFolder: tags.artist == artistFolder,
-                albumMatchesFolder: tags.album == albumFolder
+                score: 62,
+                issues: ["low bit rate"],
+                name: fileName
             });
         }
     );
