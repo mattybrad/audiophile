@@ -3,10 +3,31 @@ var path = require("path");
 var id3 = require("id3js");
 var baseFolder = "music";
 
-checkAlbum('Bright Eyes', 'Cassadaga', function(result) {
+checkArtist('Bright Eyes', function(result) {
     console.log("RESULT:");
     console.log(result);
 });
+
+function checkArtist(artistFolder, callback) {
+    var files = fs.readdirSync(path.join(baseFolder, artistFolder));
+    var albumsToCheck = [];
+    var albumResults = [];
+
+    function onAlbumChecked(result) {
+        albumResults.push(result);
+        if(albumResults.length == albumsToCheck.length) callback(albumResults);
+    }
+
+    for(var i = 0; i < files.length; i ++) {
+        if(fs.lstatSync(path.join(baseFolder, artistFolder, files[i])).isDirectory()) {
+            albumsToCheck.push(files[i]);
+        }
+    }
+
+    for(var i = 0; i < albumsToCheck.length; i ++) {
+        checkAlbum(artistFolder, albumsToCheck[i], onAlbumChecked);
+    }
+}
 
 function checkAlbum(artistFolder, albumFolder, callback) {
     var files = fs.readdirSync(path.join(baseFolder, artistFolder, albumFolder));
@@ -38,6 +59,7 @@ function checkAlbum(artistFolder, albumFolder, callback) {
 }
 
 function checkTrack(artistFolder, albumFolder, fileName, callback) {
+    console.log(fileName);
     id3(
         {
             file: path.join(baseFolder, artistFolder, albumFolder, fileName),
